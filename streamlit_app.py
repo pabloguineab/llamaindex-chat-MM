@@ -7,7 +7,24 @@ except ImportError:
   from llama_index.core import VectorStoreIndex, ServiceContext, Document, SimpleDirectoryReader
 
 st.set_page_config(page_title="Chat with the Streamlit docs, powered by LlamaIndex", page_icon="🦙", layout="centered", initial_sidebar_state="auto", menu_items=None)
-openai.api_key = st.secrets.openai_key
+
+
+openai_api_key = st.secrets["openai"]["openai_key"]
+
+st.title("ChatGPT-like clone")
+
+# Set OpenAI API key from Streamlit secrets
+openai.api_key = openai_api_key
+
+# Set a default model
+if "openai_model" not in st.session_state:
+    st.session_state["openai_model"] = "gpt-3.5-turbo"
+
+# Initialize chat history
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+
 st.title("Chat with the Streamlit docs, powered by LlamaIndex 💬🦙")
 st.info("Check out the full tutorial to build this app in our [blog post](https://blog.streamlit.io/build-a-chatbot-with-custom-data-sources-powered-by-llamaindex/)", icon="📃")
          
